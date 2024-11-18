@@ -16,3 +16,20 @@ if (!$username || !$email || !$password || !$role_id) {
         'message' => 'PROVIDE ALL FIELDS MATE!']);
     exit();
 }
+
+// checking if user is already signed up
+$query = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
+
+$query->bind_param("s", $email);
+
+$query->execute();
+
+$result = $query->get_result();
+
+if ($result->num_rows > 0) {
+    echo json_encode([
+        'status' => 'error', 
+        'message' => 'EMAIL ALREADY EXISTS!'
+    ]);
+    exit();
+}
