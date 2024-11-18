@@ -18,7 +18,7 @@ if (!$username || !$email || !$password || !$role_id) {
 }
 
 // checking if user is already signed up
-$query = $mysqli->prepare("SELECT * FROM users WHERE email = ?");
+$query = $connection->prepare("SELECT * FROM users WHERE email = ?");
 
 $query->bind_param("s", $email);
 
@@ -32,4 +32,21 @@ if ($result->num_rows > 0) {
         'message' => 'EMAIL ALREADY EXISTS!'
     ]);
     exit();
+}
+
+// inserting user in db
+$insertionQuery = $connection->prepare("INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)");
+
+$insertionQuery ->bind_param("sssi", $username, $email, $password, $role_id);
+
+if ($insertionQuery->execute()) {
+    echo json_encode([
+        'status' => 'success', 
+        'message' => 'USER REGISTERED SUCCESSFULLY!'
+    ]);
+} else {
+    echo json_encode([
+        'status' => 'error', 
+        'message' => 'FAILED REGISTERED!'
+    ]);
 }
