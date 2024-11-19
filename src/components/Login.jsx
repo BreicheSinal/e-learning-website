@@ -27,7 +27,7 @@ const Login = () => {
       localStorage.setItem("token", result.access_token);
 
       if (result.message === "successful") {
-        navigate("/");
+        navigate("/dashboard");
       } else console.log(result.data.message);
     } catch (error) {
       console.log(error.response.data.message);
