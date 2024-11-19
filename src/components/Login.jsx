@@ -8,8 +8,11 @@ import "../styles/signup.css";
 
 const Login = () => {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const goToUserDashborad = async () => {};
 
   return (
     <div className="flex column gap center">
@@ -36,7 +39,11 @@ const Login = () => {
           required
         />
       </div>
-      <button type="submit" className="button align-self">
+      <button
+        type="submit"
+        className="button align-self"
+        onClick={goToUserDashborad}
+      >
         LOGIN
       </button>
     </div>
