@@ -9,6 +9,8 @@ import "../styles/signup.css";
 const Signup = () => {
   const navigate = useNavigate();
 
+  const [message, setMessage] = useState("");
+
   const [credentials, setCredentials] = useState({
     username: "",
     email: "",
@@ -21,11 +23,23 @@ const Signup = () => {
   };
 
   const submit = async () => {
+    if (
+      !credentials.email ||
+      !credentials.username ||
+      !credentials.password ||
+      !credentials.role_id
+    ) {
+      setMessage("ALL FILEDS ARE REQUIRED!");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost/e-learning-platform/src/php/signup.php",
         credentials
       );
+
+      setMessage(response.data.message);
 
       navigate("/login");
     } catch (error) {
@@ -77,6 +91,7 @@ const Signup = () => {
       <button type="submit" onClick={submit} className="button align-self">
         Sign Up
       </button>
+      {message && <p>{message}</p>}
     </div>
   );
 };
