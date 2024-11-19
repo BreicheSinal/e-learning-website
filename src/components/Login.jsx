@@ -21,12 +21,14 @@ const Login = () => {
           password,
         },
         method: requestMethods.POST,
-        route: "",
+        route: "login",
       });
 
       localStorage.setItem("token", result.access_token);
 
-      navigate("");
+      if (result.message === "successful") {
+        navigate("/");
+      } else console.log(result.data.message);
     } catch (error) {
       console.log(error.response.data.message);
     }
