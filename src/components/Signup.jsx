@@ -29,7 +29,7 @@ const Signup = () => {
       !credentials.password ||
       !credentials.role_id
     ) {
-      setMessage("ALL FILEDS ARE REQUIRED!");
+      setMessage("All fields are required!");
       return;
     }
 
@@ -39,7 +39,13 @@ const Signup = () => {
         credentials
       );
 
-      setMessage(response.data.message);
+      if (response.data.message === "EMAIL ALREADY EXISTS!") {
+        setMessage("Email already exists!");
+        return;
+      } else if (response.data.message === "FAILED REGISTERED!") {
+        setMessage("Failed registration!");
+        return;
+      }
 
       navigate("/login");
     } catch (error) {
