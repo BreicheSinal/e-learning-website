@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+import "../styles/base.css";
+import "../styles/utilities.css";
+import "../styles/signup.css";
+
 const Signup = () => {
   const [credentials, setCredentials] = useState({
     username: "",
@@ -25,11 +29,11 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={submit}>
-        <div>
-          <label>Username:</label>
+    <div className="flex column gap center">
+      <h2 className="text-align bold">SIGN UP</h2>
+      <form onSubmit={submit} className="flex column gap">
+        <div className="flex column gap">
+          <label className="bold">Username</label>
           <input
             type="text"
             name="username"
@@ -38,8 +42,8 @@ const Signup = () => {
             required
           />
         </div>
-        <div>
-          <label>Email:</label>
+        <div className="flex column gap">
+          <label className="bold">Email</label>
           <input
             type="email"
             name="email"
@@ -48,8 +52,8 @@ const Signup = () => {
             required
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="flex column gap">
+          <label className="bold">Password</label>
           <input
             type="password"
             name="password"
@@ -58,8 +62,8 @@ const Signup = () => {
             required
           />
         </div>
-        <div>
-          <label>Role:</label>
+        <div className="flex column gap">
+          <label className="bold">Role</label>
           <select
             name="role_id"
             value={credentials.role_id}
@@ -70,7 +74,7 @@ const Signup = () => {
             {/*<option value="3">Admin</option>*/}
           </select>
         </div>
-        <button type="submit" onClick={submit}>
+        <button type="submit" onClick={submit} className="button align-self">
           Sign Up
         </button>
       </form>

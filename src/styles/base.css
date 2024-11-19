@@ -1,0 +1,27 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Robot";
+}
+
+select,
+input {
+  border: 2px solid #00599c;
+  border-radius: 10px;
+  padding: 7px;
+  opacity: 60%;
+  color: #00599c;
+  font-size: 18px;
+}
+
+button {
+  background-color: #00599c;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+button:hover {
+  background-color: #007bda;
+}
