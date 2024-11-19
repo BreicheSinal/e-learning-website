@@ -53,6 +53,10 @@ const Signup = () => {
     }
   };
 
+  const goToLogin = async () => {
+    navigate("/login");
+  };
+
   return (
     <div className="flex column gap center">
       <h2 className="text-align bold">SIGN UP</h2>
@@ -94,10 +98,16 @@ const Signup = () => {
           {/*<option value="3">Admin</option>*/}
         </select>
       </div>
+      <div className="flex row gap justify-center align-center">
+        <p>Already a user?</p>
+        <button onClick={goToLogin} className="button">
+          LOGIN
+        </button>
+      </div>
       <button type="submit" onClick={submit} className="button align-self">
-        Sign Up
+        SIGN UP
       </button>
-      {message && <p>{message}</p>}
+      {message && <p className="text-align">{message}</p>}
     </div>
   );
 };
