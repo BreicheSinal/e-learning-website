@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { requestApi } from "../utils/request";
+import { requestMethods } from "../utils/enums/requestMethods";
 import { useNavigate } from "react-router-dom";
 
 import "../styles/base.css";
@@ -12,7 +13,24 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const goToUserDashborad = async () => {};
+  const goToUserDashborad = async () => {
+    try {
+      const result = await requestApi({
+        body: {
+          email,
+          password,
+        },
+        method: requestMethods.POST,
+        route: "",
+      });
+
+      localStorage.setItem("token", result.access_token);
+
+      navigate("");
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
+  };
 
   return (
     <div className="flex column gap center">
