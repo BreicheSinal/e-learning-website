@@ -16,12 +16,7 @@ input {
 }
 
 button {
-  background-color: #00599c;
-  color: white;
-  font-weight: bold;
   border: none;
-}
-
-button:hover {
-  background-color: #007bda;
+  background-color: transparent;
+  cursor: pointer;
 }
