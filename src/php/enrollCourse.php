@@ -23,6 +23,19 @@ try {
     $key = new Key($secretKey, "HS256");
     $payload = JWT::decode($jwt, $key);
 
+    // getting user id/role 
+    $userId = $payload->user_id;
+    $roleId = $payload->role_id;
+    
+    // checking if student
+    if ($roleId != 1) { 
+        http_response_code(403);
+        echo json_encode([
+            'message' => 'You are not authorized to perform this action'
+        ]);
+        exit;
+}
+
 } catch (\Throwable $e) {
     http_response_code(401);
     echo json_encode([
