@@ -74,7 +74,7 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
 
   const goToAllCourses = async () => {
-    navigate("/login");
+    navigate("/courses");
   };
 
   return (
