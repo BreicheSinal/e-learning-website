@@ -6,6 +6,11 @@ require "vendor/autoload.php";
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit;
+}
+
 $secretKey = "#HALA_MADRID";
 
 // fetching headers
