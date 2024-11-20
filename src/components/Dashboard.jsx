@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { requestApi } from "../utils/request";
 import { requestMethods } from "../utils/enums/requestMethods";
 
+import Admin from "../components/AdminDashboard";
+
 import profileLogo from "../assets/icons/person.png";
 import logoutLogo from "../assets/icons/logout.png";
 
@@ -57,7 +59,7 @@ const Dashboard = () => {
         return <InstructorDashboard />;
       case "Admin":
         return (
-          <AdminDashboard
+          <Admin
             students={students}
             instructors={instructors}
             courses={courses}
@@ -128,54 +130,4 @@ const InstructorDashboard = () => {
   );
 };
 
-const AdminDashboard = ({ students, instructors, courses }) => {
-  return (
-    <div className="admin flex column gap">
-      <div>
-        <h2>Students</h2>
-        <ul>
-          {students.length > 0 ? (
-            students.map((student) => (
-              <li key={student.id}>
-                {student.username} - {student.email}
-              </li>
-            ))
-          ) : (
-            <p>No students found</p>
-          )}
-        </ul>
-      </div>
-
-      <div>
-        <h2>Instructors:</h2>
-        <ul>
-          {instructors.length > 0 ? (
-            instructors.map((instructor) => (
-              <li key={instructor.id}>
-                {instructor.username} - {instructor.email}
-              </li>
-            ))
-          ) : (
-            <p>No instructors found</p>
-          )}
-        </ul>
-      </div>
-
-      <div>
-        <h2>Courses:</h2>
-        <ul>
-          {courses.length > 0 ? (
-            courses.map((course) => (
-              <li key={course.id}>
-                {course.title} - Instructor: {course.instructor}
-              </li>
-            ))
-          ) : (
-            <p>No courses found</p>
-          )}
-        </ul>
-      </div>
-    </div>
-  );
-};
 export default Dashboard;
