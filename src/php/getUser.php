@@ -32,6 +32,27 @@ try {
         JOIN roles r ON u.role_id = r.id
         WHERE u.id = ?
     ";
+
+    $getUser = $connection->prepare($query);
+
+    $getUser->bind_param("i", $userId);
+
+    $getUser->execute();
+
+    $result = $getUser->get_result();
+    
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        
+        echo json_encode([
+            'message' => 'User data fetched successfully',
+            'user' => $user,
+        ]);
+    } else {
+        http_response_code(404);
+        echo json_encode(['message' => 'User not found']);
+    }
+
 }catch (\Throwable $e) {
     http_response_code(401);
     echo json_encode([
