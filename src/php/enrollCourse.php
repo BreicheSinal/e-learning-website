@@ -42,6 +42,16 @@ try {
     $query = $connection->prepare("INSERT INTO enrollments (user_id, course_id) VALUES (?, ?)");
     $query->bind_param("ii", $userId, $course_id);
 
+    if ($query->execute()) {
+        echo json_encode([
+            'message' => 'Enrolled in course successfully'
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode([
+            'message' => 'Failed to enroll in course'
+        ]);
+    }
 
 } catch (\Throwable $e) {
     http_response_code(401);
