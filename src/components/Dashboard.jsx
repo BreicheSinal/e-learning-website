@@ -41,7 +41,7 @@ const Dashboard = () => {
   const renderDashboardContent = () => {
     switch (role) {
       case "Student":
-        return <StudentDashboard />;
+        return <StudentDashboard enrolledCourses={user.enrolled_courses} />;
       case "Instructor":
         return <InstructorDashboard />;
       case "Admin":
@@ -69,11 +69,10 @@ const Dashboard = () => {
   );
 };
 
-// Student Dashboard Component
-const StudentDashboard = () => {
+const StudentDashboard = ({ enrolledCourses }) => {
   const navigate = useNavigate();
 
-  const goToAllCourses = async () => {
+  const goToAllCourses = () => {
     navigate("/courses");
   };
 
@@ -82,11 +81,22 @@ const StudentDashboard = () => {
       <div className="flex row space-between align-center">
         <h2>Dashboard</h2>
         <button className="align-start button" onClick={goToAllCourses}>
-          View All Course
+          View All Courses
         </button>
       </div>
-      <h3>Enrolled Courses</h3>
-      <h3>Assignments</h3>
+      <h1 className="bold">Enrolled Courses</h1>
+      <ul className="enrolled-courses-list">
+        {enrolledCourses && enrolledCourses.length > 0 ? (
+          enrolledCourses.map((course) => (
+            <li key={course.id} className="course-item">
+              <h4>{course.title}</h4>
+            </li>
+          ))
+        ) : (
+          <li className="no-courses">No enrolled courses found</li>
+        )}
+      </ul>
+      <h1 className="bold">Assignments</h1>
     </div>
   );
 };
