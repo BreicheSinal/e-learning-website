@@ -11,6 +11,11 @@ import "../styles/dashboard.css";
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
+
+  const [students, setStudents] = useState([]);
+  const [instructors, setInstructors] = useState([]);
+  const [courses, setCourses] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +31,12 @@ const Dashboard = () => {
           console.log(result.user);
           setUser(result.user);
           setRole(result.user.role);
+
+          if (result.user.role === "Admin") {
+            setStudents(result.user.students || []);
+            setInstructors(result.user.instructors || []);
+            setCourses(result.user.courses || []);
+          }
         } else {
           navigate("/login");
         }
@@ -45,7 +56,13 @@ const Dashboard = () => {
       case "Instructor":
         return <InstructorDashboard />;
       case "Admin":
-        return <AdminDashboard />;
+        return (
+          <AdminDashboard
+            students={students}
+            instructors={instructors}
+            courses={courses}
+          />
+        );
       default:
         return <div>Loading...</div>;
     }
@@ -111,12 +128,53 @@ const InstructorDashboard = () => {
   );
 };
 
-// Admin Dashboard Component
-const AdminDashboard = () => {
+const AdminDashboard = ({ students, instructors, courses }) => {
   return (
-    <div>
-      <h3>Manage Users</h3>
-      <h3>Manage Courses</h3>
+    <div className="admin flex column gap">
+      <div>
+        <h2>Students</h2>
+        <ul>
+          {students.length > 0 ? (
+            students.map((student) => (
+              <li key={student.id}>
+                {student.username} - {student.email}
+              </li>
+            ))
+          ) : (
+            <p>No students found</p>
+          )}
+        </ul>
+      </div>
+
+      <div>
+        <h2>Instructors:</h2>
+        <ul>
+          {instructors.length > 0 ? (
+            instructors.map((instructor) => (
+              <li key={instructor.id}>
+                {instructor.username} - {instructor.email}
+              </li>
+            ))
+          ) : (
+            <p>No instructors found</p>
+          )}
+        </ul>
+      </div>
+
+      <div>
+        <h2>Courses:</h2>
+        <ul>
+          {courses.length > 0 ? (
+            courses.map((course) => (
+              <li key={course.id}>
+                {course.title} - Instructor: {course.instructor}
+              </li>
+            ))
+          ) : (
+            <p>No courses found</p>
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

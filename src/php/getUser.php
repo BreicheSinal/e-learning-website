@@ -69,7 +69,7 @@ try {
             // adding enrolled courses
             $user['enrolled_courses'] = $enrolledCourses;
 
-        }else if ($user['role'] === 'admin') {
+        }else if ($user['role'] === 'Admin') {
             // fethcing students
             $studentsQuery = "
                 SELECT u.id, u.username, u.email 
