@@ -17,7 +17,7 @@ const AdminDashboard = ({ students, instructors, courses }) => {
     try {
       const response = await requestApi({
         method: requestMethods.POST,
-        route: "admin/create_course.php",
+        route: "createCourse",
         body: {
           title: courseName,
           instructor_id: selectedInstructor,
@@ -34,7 +34,7 @@ const AdminDashboard = ({ students, instructors, courses }) => {
   };
 
   return (
-    <div className="admin flex gap">
+    <div className="admin flex space-between">
       <div className="flex column gap">
         <div>
           <h2>Students</h2>
@@ -111,7 +111,7 @@ const AdminDashboard = ({ students, instructors, courses }) => {
         </div>
 
         <button className="button" onClick={handleCreateCourse}>
-          Create Course
+          Create
         </button>
       </div>
     </div>
