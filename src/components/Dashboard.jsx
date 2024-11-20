@@ -4,6 +4,7 @@ import { requestApi } from "../utils/request";
 import { requestMethods } from "../utils/enums/requestMethods";
 
 import Admin from "../components/AdminDashboard";
+import Instructor from "../components/InstructorDashboard";
 
 import profileLogo from "../assets/icons/person.png";
 import logoutLogo from "../assets/icons/logout.png";
@@ -56,7 +57,7 @@ const Dashboard = () => {
       case "Student":
         return <StudentDashboard enrolledCourses={user.enrolled_courses} />;
       case "Instructor":
-        return <InstructorDashboard />;
+        return <Instructor />;
       case "Admin":
         return (
           <Admin
