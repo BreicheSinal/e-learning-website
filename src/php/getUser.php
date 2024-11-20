@@ -116,6 +116,23 @@ try {
             $user['instructors'] = $instructors;
             $user['courses'] = $allCourses;
 
+        }else if ($user['role'] === 'Instructor') {
+             // fetching courses by instructor
+            $coursesQuery = "
+            SELECT c.id, c.title 
+            FROM courses c
+            WHERE c.instructor_id = ?
+            ";
+
+            $getCourses = $connection->prepare($coursesQuery);
+            $getCourses->bind_param("i", $userId);
+            $getCourses->execute();
+            $coursesResult = $getCourses->get_result();
+
+            $instructorCourses = [];
+            while ($course = $coursesResult->fetch_assoc()) {
+            $instructorCourses[] = $course;
+            }
         }
         echo json_encode([
             'message' => 'User data fetched successfully',
