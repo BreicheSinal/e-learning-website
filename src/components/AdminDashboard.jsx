@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { requestApi } from "../utils/request"; // Assuming you have a utility for API calls
 import { requestMethods } from "../utils/enums/requestMethods";
 
+import "../styles/adminDashboard.css";
+
 const AdminDashboard = ({ students, instructors, courses }) => {
   const [courseName, setCourseName] = useState("");
   const [selectedInstructor, setSelectedInstructor] = useState("");
@@ -115,4 +117,5 @@ const AdminDashboard = ({ students, instructors, courses }) => {
     </div>
   );
 };
+
 export default AdminDashboard;

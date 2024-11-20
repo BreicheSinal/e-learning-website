@@ -37,12 +37,3 @@
 .no-assignments {
   color: #666;
 }
-
-.admin ul {
-  margin-top: 10px;
-}
-
-.admin ul,
-li {
-  font-size: 20px;
-}
