@@ -1,0 +1,25 @@
+.courses {
+  padding: 10px 50px;
+}
+
+.table {
+  width: 50%;
+  text-align: left;
+  padding: 5px;
+}
+
+.table button {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #00599c;
+  color: white;
+  font-weight: bold;
+  height: 30px;
+  font-size: 14px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.table button:hover {
+  background-color: #007bda;
+}

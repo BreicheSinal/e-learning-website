@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { requestApi } from "../utils/request";
 import { requestMethods } from "../utils/enums/requestMethods";
+
+import "../styles/courses.css";
+
 const Courses = () => {
   const [courses, setCourses] = useState([]);
 
@@ -24,7 +27,7 @@ const Courses = () => {
   }, []);
 
   return (
-    <div className="flex column gap main">
+    <div className="flex column gap courses">
       <h2>Available Courses</h2>
       {courses.length > 0 ? (
         <table className="table">
