@@ -111,6 +111,10 @@ try {
                 $allCourses[] = $course;
             }
 
+            // adding admin data
+            $user['students'] = $students;
+            $user['instructors'] = $instructors;
+            $user['courses'] = $allCourses;
 
         }
         echo json_encode([
