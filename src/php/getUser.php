@@ -98,6 +98,19 @@ try {
                 $instructors[] = $instructor;
             }
 
+             // fetching courses
+             $coursesQuery = "
+             SELECT c.id, c.title, u.username AS instructor 
+             FROM courses c
+             JOIN users u ON c.instructor_id = u.id
+             ";
+
+            $coursesResult = $connection->query($coursesQuery);
+            $allCourses = [];
+            while ($course = $coursesResult->fetch_assoc()) {
+                $allCourses[] = $course;
+            }
+
 
         }
         echo json_encode([
