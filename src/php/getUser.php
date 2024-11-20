@@ -39,16 +39,37 @@ try {
     ";
 
     $getUser = $connection->prepare($query);
-
     $getUser->bind_param("i", $userId);
-
     $getUser->execute();
-
     $result = $getUser->get_result();
-    
+
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        
+
+        // checking id user is a student
+        if ($user['role'] === 'Student') {
+            // getting enrolled courses
+            $coursesQuery = "
+                SELECT c.id, c.title 
+                FROM enrollments e
+                JOIN courses c ON e.course_id = c.id
+                WHERE e.user_id = ?
+            ";
+
+            $getCourses = $connection->prepare($coursesQuery);
+            $getCourses->bind_param("i", $userId);
+            $getCourses->execute();
+            $coursesResult = $getCourses->get_result();
+
+            $enrolledCourses = [];
+            while ($course = $coursesResult->fetch_assoc()) {
+                $enrolledCourses[] = $course;
+            }
+
+            // adding enrolled courses
+            $user['enrolled_courses'] = $enrolledCourses;
+        }
+
         echo json_encode([
             'message' => 'User data fetched successfully',
             'user' => $user,
@@ -58,7 +79,7 @@ try {
         echo json_encode(['message' => 'User not found']);
     }
 
-}catch (\Throwable $e) {
+} catch (\Throwable $e) {
     http_response_code(401);
     echo json_encode([
         "message" => "Unauthorized",
