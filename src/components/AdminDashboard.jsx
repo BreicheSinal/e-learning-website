@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { requestApi } from "../utils/request"; // Assuming you have a utility for API calls
-import { requestMethods } from "../utils/enums/requestMethods";
+import axios from "axios";
 
 import "../styles/adminDashboard.css";
 
@@ -14,21 +13,31 @@ const AdminDashboard = ({ students, instructors, courses }) => {
       return;
     }
 
-    try {
-      const response = await requestApi({
-        method: requestMethods.POST,
-        route: "createCourse",
-        body: {
-          title: courseName,
-          instructor_id: selectedInstructor,
-        },
-      });
+    const data = {
+      title: courseName,
+      instructor_id: selectedInstructor,
+    };
 
-      alert(response.message || "Course created successfully!");
+    console.log("Data to be sent:", data);
+
+    try {
+      const response = await axios.post(
+        "http://localhost/e-learning-platform/src/php/createCourse.php",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("API Response:", response.data);
+      alert(response.data.message || "Course created successfully");
+
       setCourseName("");
       setSelectedInstructor("");
     } catch (error) {
-      console.error(error);
+      console.error("Error creating course:", error.message);
       alert("Failed to create course.");
     }
   };
