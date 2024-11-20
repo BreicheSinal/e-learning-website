@@ -1,7 +1,7 @@
 <?php
 include 'connection.php';
 
-$query = $connection->prepare("SELECT title FROM courses");
+$query = $connection->prepare("SELECT id, title FROM courses");
 
 $query->execute();
 

@@ -20,7 +20,24 @@ const Courses = () => {
     }
   };
 
-  const enroll = async (courseId) => {};
+  const enroll = async (courseId) => {
+    console.log(courseId);
+    try {
+      const result = await requestApi({
+        body: { course_id: courseId },
+        method: requestMethods.POST,
+        route: "enrollCourse",
+      });
+
+      if (result.message === "Enrolled in course successfully") {
+        fetchCourses();
+      } else {
+        alert("Failed to enroll in course");
+      }
+    } catch (error) {
+      console.error("Error enrolling in course:", error);
+    }
+  };
 
   useEffect(() => {
     fetchCourses();
@@ -30,25 +47,18 @@ const Courses = () => {
     <div className="flex column gap courses">
       <h2>Available Courses</h2>
       {courses.length > 0 ? (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Course Title</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.map((course, index) => (
-              <tr className="tr" key={course.id}>
-                <td>{index + 1}</td>
-                <td>{course.title}</td>
-                <td>
-                  <button onClick={() => enroll(course.id)}>ENROLL</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="courses-list">
+          {courses.map((course, index) => (
+            <div className="course-card" key={course.id || index}>
+              <div className="course-card-header">
+                <h3>{course.title}</h3>
+              </div>
+              <div className="course-card-body">
+                <button onClick={() => enroll(course.id)}>ENROLL</button>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <p>No available courses</p>
       )}

@@ -6,6 +6,11 @@ require "vendor/autoload.php";
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit;
+}
+
 $secretKey = "#HALA_MADRID";
 
 // fetching headers
@@ -25,17 +30,7 @@ try {
 
     // getting user id/role 
     $userId = $payload->user_id;
-    $roleId = $payload->role_id;
     
-    // checking if student
-    if ($roleId != 1) { 
-        http_response_code(403);
-        echo json_encode([
-            'message' => 'You are not authorized to perform this action'
-        ]);
-        exit;
-    }
-
     $data = json_decode(file_get_contents("php://input"), true);
     $course_id = $data['course_id'];
 
