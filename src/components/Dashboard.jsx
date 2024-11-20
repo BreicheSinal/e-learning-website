@@ -71,11 +71,19 @@ const Dashboard = () => {
 
 // Student Dashboard Component
 const StudentDashboard = () => {
+  const navigate = useNavigate();
+
+  const goToAllCourses = async () => {
+    navigate("/login");
+  };
+
   return (
     <div className="student flex column gap">
       <div className="flex row space-between align-center">
         <h2>Dashboard</h2>
-        <button className="align-start button">View All Course</button>
+        <button className="align-start button" onClick={goToAllCourses}>
+          View All Course
+        </button>
       </div>
       <h3>Enrolled Courses</h3>
       <h3>Assignments</h3>
