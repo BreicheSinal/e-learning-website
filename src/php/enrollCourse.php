@@ -34,7 +34,14 @@ try {
             'message' => 'You are not authorized to perform this action'
         ]);
         exit;
-}
+    }
+
+    $data = json_decode(file_get_contents("php://input"), true);
+    $course_id = $data['course_id'];
+
+    $query = $connection->prepare("INSERT INTO enrollments (user_id, course_id) VALUES (?, ?)");
+    $query->bind_param("ii", $userId, $course_id);
+
 
 } catch (\Throwable $e) {
     http_response_code(401);
