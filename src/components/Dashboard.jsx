@@ -54,7 +54,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="navbar flex row gap align-center space-between">
-        <h2>Welcome</h2>
+        <h2>Welcome {user ? user.username : "Loading..."}</h2>
         <div className="flex gap">
           <button>
             <img src={profileLogo} alt="profile icon" className="icon" />
