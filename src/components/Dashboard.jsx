@@ -38,6 +38,19 @@ const Dashboard = () => {
     fetchUserData();
   }, [navigate]);
 
+  const renderDashboardContent = () => {
+    switch (role) {
+      case "Student":
+        return <StudentDashboard />;
+      case "Instructor":
+        return <InstructorDashboard />;
+      case "Admin":
+        return <AdminDashboard />;
+      default:
+        return <div>Loading...</div>;
+    }
+  };
+
   return (
     <div className="dashboard">
       <div className="navbar flex row gap align-center space-between">
@@ -51,9 +64,41 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      <div className="main"></div>
+      <div className="main">
+        <h2>{role} Dashboard</h2>
+        {renderDashboardContent()}
+      </div>
     </div>
   );
 };
 
+// Student Dashboard Component
+const StudentDashboard = () => {
+  return (
+    <div>
+      <h3>Courses</h3>
+      <h3>Assignments</h3>
+    </div>
+  );
+};
+
+// Instructor Dashboard Component
+const InstructorDashboard = () => {
+  return (
+    <div>
+      <h3>Assigned Courses</h3>
+      <h3>Post Announcements</h3>
+    </div>
+  );
+};
+
+// Admin Dashboard Component
+const AdminDashboard = () => {
+  return (
+    <div>
+      <h3>Manage Users</h3>
+      <h3>Manage Courses</h3>
+    </div>
+  );
+};
 export default Dashboard;
