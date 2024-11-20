@@ -47,7 +47,8 @@ use Firebase\JWT\JWT;
     }else{
         http_response_code(400);
         echo json_encode([
-            "message" => "Invalid credentials",
+            "message" => "Invalid credentials!",
         ]);
+        exit();
     }
  }

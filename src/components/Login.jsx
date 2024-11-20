@@ -13,7 +13,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [message, setMessage] = useState("");
+
   const goToUserDashborad = async () => {
+    if (!email || !password) {
+      setMessage("All fields are required!");
+      return;
+    }
+
     try {
       const result = await requestApi({
         body: {
@@ -26,11 +33,23 @@ const Login = () => {
 
       localStorage.setItem("token", result.access_token);
 
-      if (result.message === "successful") {
-        navigate("/dashboard");
-      } else console.log(result.data.message);
+      if (result.message === "Invalid credentials!") {
+        setMessage("Invalid credentials!");
+        return;
+      }
+
+      navigate("/dashboard");
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(
+        "Error:",
+        error.response ? error.response.data.message : error.message
+      );
+
+      if (error.response?.data?.message) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("An error occurred! Please try again.");
+      }
     }
   };
 
@@ -66,6 +85,7 @@ const Login = () => {
       >
         LOGIN
       </button>
+      {message && <p className="text-align">{message}</p>}
     </div>
   );
 };
