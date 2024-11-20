@@ -7,6 +7,29 @@ const AdminDashboard = ({ students, instructors, courses }) => {
   const [courseName, setCourseName] = useState("");
   const [selectedInstructor, setSelectedInstructor] = useState("");
 
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const BanUser = async () => {
+    if (!selectedUser) {
+      alert("Please select a user to ban.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost/e-learning-platform/src/php/banUser.php",
+        {
+          user_id: selectedUser,
+        }
+      );
+
+      alert(response.data.message);
+    } catch (error) {
+      console.error("Error banning user:", error);
+      alert("Failed to ban user.");
+    }
+  };
+
   const handleCreateCourse = async () => {
     if (!courseName || !selectedInstructor) {
       alert("Please provide a course name and select an instructor.");
@@ -43,8 +66,8 @@ const AdminDashboard = ({ students, instructors, courses }) => {
   };
 
   return (
-    <div className="admin flex space-between">
-      <div className="flex column gap">
+    <div className="admin flex column space-between">
+      <div className="flex space-between gap">
         <div>
           <h2>Students</h2>
           <ul>
@@ -90,6 +113,7 @@ const AdminDashboard = ({ students, instructors, courses }) => {
           </ul>
         </div>
       </div>
+
       <div className="course-form">
         <h3>Create a New Course</h3>
         <div className="form-group">
@@ -121,6 +145,33 @@ const AdminDashboard = ({ students, instructors, courses }) => {
 
         <button className="button" onClick={handleCreateCourse}>
           Create
+        </button>
+      </div>
+
+      <div className="form-group">
+        <h3>Ban a User</h3>
+        <div className="form-group flex column gap">
+          <label htmlFor="userSelect">Select User to Ban:</label>
+          <select
+            id="userSelect"
+            value={selectedUser}
+            onChange={(e) => setSelectedUser(e.target.value)}
+          >
+            <option value="">Select a user</option>
+            {students.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.username} ({user.email})
+              </option>
+            ))}
+            {instructors.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.username} ({user.email})
+              </option>
+            ))}
+          </select>
+        </div>
+        <button className="button" onClick={BanUser}>
+          Ban
         </button>
       </div>
     </div>

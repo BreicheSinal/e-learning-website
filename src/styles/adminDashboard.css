@@ -1,4 +1,5 @@
-.course-form {
+.course-form,
+.form-group {
   border: 1px solid #ddd;
   padding: 16px;
   margin-top: 20px;
@@ -10,14 +11,14 @@
   margin-bottom: 16px;
 }
 
-.course-form label {
+.course-form .form-group label {
   display: block;
   font-weight: bold;
   margin-bottom: 8px;
 }
 
-.course-form input,
-.course-form select {
+.course-form .form-group input,
+.course-form .form-group select {
   width: 100%;
   padding: 8px;
   margin-bottom: 8px;
@@ -25,7 +26,7 @@
   border-radius: 4px;
 }
 
-.course-form .button {
+.course-form .form-group .button {
   padding: 10px 16px;
   background-color: #007bff;
   color: white;
@@ -34,7 +35,7 @@
   cursor: pointer;
 }
 
-.course-form .button:hover {
+.course-form .form-group .button:hover {
   background-color: #0056b3;
 }
 
