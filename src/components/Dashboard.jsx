@@ -64,10 +64,7 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      <div className="main">
-        <h2>{role} Dashboard</h2>
-        {renderDashboardContent()}
-      </div>
+      <div className="main flex column gap">{renderDashboardContent()}</div>
     </div>
   );
 };
@@ -75,8 +72,12 @@ const Dashboard = () => {
 // Student Dashboard Component
 const StudentDashboard = () => {
   return (
-    <div>
-      <h3>Courses</h3>
+    <div className="student flex column gap">
+      <div className="flex row space-between align-center">
+        <h2>Dashboard</h2>
+        <button className="align-start button">View All Course</button>
+      </div>
+      <h3>Enrolled Courses</h3>
       <h3>Assignments</h3>
     </div>
   );

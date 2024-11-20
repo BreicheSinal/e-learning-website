@@ -11,3 +11,7 @@
 .main {
   padding: 10px 50px;
 }
+
+.student > div > button {
+  width: 200px;
+}

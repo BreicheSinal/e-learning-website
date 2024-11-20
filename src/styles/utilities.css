@@ -26,6 +26,9 @@
   align-self: center;
 }
 
+.align-start {
+  align-self: flex-start;
+}
 .text-align {
   text-align: center;
 }
@@ -75,4 +78,3 @@
 .margin-top {
   margin-top: 15px;
 }
-
