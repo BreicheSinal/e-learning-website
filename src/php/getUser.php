@@ -46,7 +46,7 @@ try {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // checking id user is a student
+        // checking id user role to get data upon it
         if ($user['role'] === 'Student') {
             // getting enrolled courses
             $coursesQuery = "
@@ -68,8 +68,22 @@ try {
 
             // adding enrolled courses
             $user['enrolled_courses'] = $enrolledCourses;
-        }
+        }else if ($user['role'] === 'admin') {
+            // fethcing students
+            $studentsQuery = "
+                SELECT u.id, u.username, u.email 
+                FROM users u
+                JOIN roles r ON u.role_id = r.id
+                WHERE r.name = 'Student'
+            ";
 
+            $studentsResult = $connection->query($studentsQuery);
+            $students = [];
+            while ($student = $studentsResult->fetch_assoc()) {
+                $students[] = $student;
+            }
+
+        }
         echo json_encode([
             'message' => 'User data fetched successfully',
             'user' => $user,
