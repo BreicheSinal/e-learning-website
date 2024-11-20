@@ -18,3 +18,16 @@ if (!isset($headers['Authorization'])) {
 
 $jwt = $headers["Authorization"];
 
+try {
+    // decoding jwt token
+    $key = new Key($secretKey, "HS256");
+    $payload = JWT::decode($jwt, $key);
+
+} catch (\Throwable $e) {
+    http_response_code(401);
+    echo json_encode([
+        "message" => "Unauthorized", 
+        "error" => $e->getMessage()
+    ]);
+
+}
