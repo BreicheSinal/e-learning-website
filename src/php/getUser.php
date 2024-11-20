@@ -68,6 +68,7 @@ try {
 
             // adding enrolled courses
             $user['enrolled_courses'] = $enrolledCourses;
+
         }else if ($user['role'] === 'admin') {
             // fethcing students
             $studentsQuery = "
@@ -82,6 +83,21 @@ try {
             while ($student = $studentsResult->fetch_assoc()) {
                 $students[] = $student;
             }
+
+             // fetching instructors
+             $instructorsQuery = "
+             SELECT u.id, u.username, u.email 
+             FROM users u
+             JOIN roles r ON u.role_id = r.id
+             WHERE r.name = 'Instructor'
+            ";
+
+            $instructorsResult = $connection->query($instructorsQuery);
+            $instructors = [];
+            while ($instructor = $instructorsResult->fetch_assoc()) {
+                $instructors[] = $instructor;
+            }
+
 
         }
         echo json_encode([
