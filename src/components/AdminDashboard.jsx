@@ -7,7 +7,7 @@ const AdminDashboard = ({ students, instructors, courses }) => {
   const [courseName, setCourseName] = useState("");
   const [selectedInstructor, setSelectedInstructor] = useState("");
 
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState("");
 
   const BanUser = async () => {
     if (!selectedUser) {
@@ -15,15 +15,25 @@ const AdminDashboard = ({ students, instructors, courses }) => {
       return;
     }
 
+    const userId = parseInt(selectedUser, 10);
+
+    const data = {
+      user_id: userId,
+    };
+
+    console.log(data);
     try {
       const response = await axios.post(
         "http://localhost/e-learning-platform/src/php/banUser.php",
+        data,
         {
-          user_id: selectedUser,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
-      alert(response.data.message);
+      setSelectedUser("");
     } catch (error) {
       console.error("Error banning user:", error);
       alert("Failed to ban user.");
