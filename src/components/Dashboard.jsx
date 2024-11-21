@@ -19,6 +19,9 @@ const Dashboard = () => {
   const [instructors, setInstructors] = useState([]);
   const [courses, setCourses] = useState([]);
 
+  const [instructorsCourses, setInstructorCourses] = useState([]);
+  const [InstructorAssignments, setInstructorAssignments] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +43,11 @@ const Dashboard = () => {
             setInstructors(result.user.instructors || []);
             setCourses(result.user.courses || []);
           }
+
+          if (result.user.role === "Instructor") {
+            setInstructorCourses(result.instructorsCourses || []);
+            setInstructorAssignments(result.InstructorAssignments || []);
+          }
         } else {
           navigate("/login");
         }
@@ -57,7 +65,12 @@ const Dashboard = () => {
       case "Student":
         return <StudentDashboard enrolledCourses={user.enrolled_courses} />;
       case "Instructor":
-        return <Instructor />;
+        return (
+          <Instructor
+            courses={instructorsCourses}
+            assignments={InstructorAssignments}
+          />
+        );
       case "Admin":
         return (
           <Admin
@@ -117,16 +130,6 @@ const StudentDashboard = ({ enrolledCourses }) => {
         )}
       </ul>
       <h1 className="bold">Assignments</h1>
-    </div>
-  );
-};
-
-// Instructor Dashboard Component
-const InstructorDashboard = () => {
-  return (
-    <div>
-      <h3>Assigned Courses</h3>
-      <h3>Post Announcements</h3>
     </div>
   );
 };
