@@ -133,6 +133,28 @@ try {
             while ($course = $coursesResult->fetch_assoc()) {
             $instructorCourses[] = $course;
             }
+
+            // fetching assignments by instructor
+            $assignmentsQuery = "
+            SELECT a.id, a.title, a.due_date
+            FROM assignments a
+            WHERE a.instructor_id = ?
+            ";
+
+            $getAssignments = $connection->prepare($assignmentsQuery);
+            $getAssignments->bind_param("i", $userId);
+            $getAssignments->execute();
+            $assignmentsResult = $getAssignments->get_result();
+
+            $instructorAssignments = [];
+            while ($assignment = $assignmentsResult->fetch_assoc()) {
+            $instructorAssignments[] = $assignment;
+            }
+
+             // adding instructor data
+            $user['instructor_courses'] = $instructorCourses;
+            $user['instructor_assignments'] = $instructorAssignments;
+            
         }
         echo json_encode([
             'message' => 'User data fetched successfully',
@@ -146,6 +168,6 @@ try {
 } catch (\Throwable $e) {
     http_response_code(401);
     echo json_encode([
-        "message" => "Unauthorized",
+        "message" => "Unauthorized user",
     ]);
 }
